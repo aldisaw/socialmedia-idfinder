@@ -1,16 +1,16 @@
-#dirsearch
-Current Release: v0.3.9 (2019.11.26)
+# ID Finder
+Current Release: v0.1.1 (2020.10.01)
 
-#Overview
-dirsearch is a simple command line tool designed to brute force directories and files in websites.
+## Overview
+ID Finder is a simple command line tool designed to convert username to user id.
 
-#Installation & Usage
+## Installation & Usage
 ```
 git clone https://github.com/aldisaw/socialmedia-idfinder.git
 cd socialmedia-idfinder
 python3 idfinder.py
 ```
-#Operating Systems supported
+## Operating Systems supported
 - Windows XP/7/8/10
 - GNU/Linux
 - MacOSX
