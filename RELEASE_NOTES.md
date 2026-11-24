@@ -27,13 +27,15 @@
 
 ---
 
-## Official Release Assets (Browser Edition Only)
+## Official Distribution — Browser Edition
 
-| File | Size | Description |
+Social ID Finder maintains and distributes **Browser Edition** exclusively. It includes **PySide6**, **HTTPX**, **Playwright driver**, and the bundled **Chromium Headless Shell**, with browser fallback enabled for supported public profile lookups.
+
+| Artifact | Size | Description |
 | :--- | ---: | :--- |
-| **`SocialIDFinder_Browser_ONEDIR.zip`** | **216.39 MB** ZIP (**505.67 MB** extracted, 706 files) | Recommended full directory package bundling PySide6, HTTPX, Playwright driver, and Chromium headless shell. Extract all files and run `SocialIDFinder.exe` inside the folder. |
-| **`SocialIDFinder_Browser.exe`** | **209.46 MB** | Portable single-file executable with bundled Chromium runtime. First startup takes several seconds during temporary unpacking. |
-| **`SHA256SUMS.txt`** | — | SHA-256 checksums for all published release files. |
+| **`SocialIDFinder_Browser_ONEDIR/`** (`SocialIDFinder_Browser_ONEDIR.zip`) | **216.39 MB** ZIP (**505.67 MB** extracted, 706 files) | **Recommended for faster startup.** Extract the complete directory and launch `SocialIDFinder.exe` without moving it away from `_internal/`. |
+| **`SocialIDFinder_Browser.exe`** | **209.46 MB** | Portable single-file (`ONEFILE`) executable bundling Chromium Headless Shell and dependencies. Startup unpacks temporary runtime files on launch. |
+| **`SHA256SUMS.txt`** | — | SHA-256 verification checksums for all published release files. |
 | **`RELEASE_NOTES.md`** | — | This document. |
 | **`USER_GUIDE.md`** | — | End-user installation, usage, and troubleshooting guide. |
 

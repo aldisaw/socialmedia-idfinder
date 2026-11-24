@@ -1,18 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
-"""Reproducible PyInstaller spec for Social ID Finder v1.1.0.
+"""Reproducible PyInstaller spec for Social ID Finder v1.1.0 (Browser Edition).
+
+The sole official distribution bundles PySide6, HTTPX, Playwright driver,
+and Chromium Headless Shell.
 
 Environment controls:
-  SIF_EDITION    = 'standard' (default, no Playwright/Chromium) | 'browser' (Playwright + Chromium headless shell)
   SIF_BUILD_MODE = 'onedir' (default) | 'onefile'
 """
 
 import os
 from pathlib import Path
 from PyInstaller.utils.hooks import collect_all, collect_data_files
-
-EDITION = os.environ.get("SIF_EDITION", "standard").strip().lower()
-if EDITION not in ("standard", "browser"):
-    raise ValueError(f"Unsupported SIF_EDITION={EDITION!r}; expected 'standard' or 'browser'.")
 
 BUILD_MODE = os.environ.get("SIF_BUILD_MODE", "onedir").strip().lower()
 if BUILD_MODE not in ("onedir", "onefile"):
@@ -58,34 +56,28 @@ excludes = [
     "PySide6.QtTest",
 ]
 
-if EDITION == "standard":
-    # Strictly prevent Playwright or Chromium from being bundled into Standard Edition
-    excludes.extend(["playwright", "greenlet"])
-    collect_name = "SocialIDFinder_Standard"
-    onefile_name = "SocialIDFinder_Standard"
-else:
-    pw_datas, pw_bins, pw_hidden = collect_all("playwright")
-    datas += pw_datas
-    binaries += pw_bins
-    hiddenimports += pw_hidden + ["greenlet"]
+pw_datas, pw_bins, pw_hidden = collect_all("playwright")
+datas += pw_datas
+binaries += pw_bins
+hiddenimports += pw_hidden + ["greenlet"]
 
-    # Bundle Playwright Chromium headless shell runtime under ms-playwright/<version>
-    ms_pw_root = Path(os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or (Path(os.environ.get("LOCALAPPDATA", "")) / "ms-playwright"))
-    shell_dirs = sorted(ms_pw_root.glob("chromium_headless_shell-*"), reverse=True)
-    if not shell_dirs:
-        raise FileNotFoundError(
-            f"Chromium headless shell not found under '{ms_pw_root}'. Run '.venv\\Scripts\\playwright.exe install chromium'."
-        )
-    shell_dir = shell_dirs[0]
-    for src_file in shell_dir.rglob("*"):
-        if not src_file.is_file() or src_file.suffix.lower() == ".log":
-            continue
-        rel_parent = src_file.parent.relative_to(shell_dir)
-        dest_dir = Path("ms-playwright") / shell_dir.name / rel_parent
-        datas.append((str(src_file), str(dest_dir)))
+# Bundle Playwright Chromium headless shell runtime under ms-playwright/<version>
+ms_pw_root = Path(os.environ.get("PLAYWRIGHT_BROWSERS_PATH") or (Path(os.environ.get("LOCALAPPDATA", "")) / "ms-playwright"))
+shell_dirs = sorted(ms_pw_root.glob("chromium_headless_shell-*"), reverse=True)
+if not shell_dirs:
+    raise FileNotFoundError(
+        f"Chromium headless shell not found under '{ms_pw_root}'. Run '.venv\\Scripts\\playwright.exe install chromium'."
+    )
+shell_dir = shell_dirs[0]
+for src_file in shell_dir.rglob("*"):
+    if not src_file.is_file() or src_file.suffix.lower() == ".log":
+        continue
+    rel_parent = src_file.parent.relative_to(shell_dir)
+    dest_dir = Path("ms-playwright") / shell_dir.name / rel_parent
+    datas.append((str(src_file), str(dest_dir)))
 
-    collect_name = "SocialIDFinder_Browser"
-    onefile_name = "SocialIDFinder_Browser"
+collect_name = "SocialIDFinder_Browser"
+onefile_name = "SocialIDFinder_Browser"
 
 a = Analysis(
     [str(PROJECT_ROOT / "main.py")],

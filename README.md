@@ -476,7 +476,7 @@ Verified facts for **v1.1.0**:
 
 - **Offline Test Suite:** **`284 passed`** (`pytest -q`, 0 failures), covering normalization, all 5 platform extractors, batch concurrency/cancellation/retry, validation/confidence scoring, SQLite v1 → v2 migrations, WAL-safe online backups, and 66 dedicated offline security hardening tests (`tests/test_security_hardening.py`).
 - **Browser Edition Read-Only Smoke Tests:** Verified live public extraction across HTTPX and Playwright Chromium with pinned-IP TLS and context route interception (`youtube.com/@Google`, `instagram.com/instagram/`, `facebook.com/zuck`, `x.com/X`, `tiktok.com/@tiktok`).
-- **Clean-Folder Isolated Executable Tests:** Four packaged binaries (including internal packaging-validation builds alongside the official Browser Edition ONEDIR and ONEFILE builds; only Browser Edition is published) were copied to isolated `%TEMP%` directories outside the project and launched with `PATH="C:\Windows\System32;C:\Windows"` and zero Python/`.venv`/`PYTHONPATH` references — all launched cleanly (`ALIVE=True`, `EXE_DIR_WRITES=0`, logging and SQLite v2 WAL exclusively under `%APPDATA%\Social ID Finder\`).
+- **Clean-Folder Isolated Executable Tests:** Both official Browser Edition builds (`SocialIDFinder_Browser_ONEDIR/` and `SocialIDFinder_Browser.exe`) were copied to isolated `%TEMP%` directories outside the project and launched with `PATH="C:\Windows\System32;C:\Windows"` and zero Python/`.venv`/`PYTHONPATH` references — both launched cleanly (`ALIVE=True`, `EXE_DIR_WRITES=0`, logging and SQLite v2 WAL exclusively under `%APPDATA%\Social ID Finder\`).
 - **Checksum Integrity:** All published release assets are verified against `SHA256SUMS.txt` after final ZIP packaging.
 
 ### Known Release Limitations
