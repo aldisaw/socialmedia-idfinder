@@ -1,6 +1,6 @@
 # Social ID Finder
 
-**Security-hardened Windows desktop app for discovering public social media profile IDs with HTTPX and Playwright Chromium.**
+**A powerful Windows desktop tool to find and extract public profile IDs from Instagram, TikTok, Facebook, X (Twitter), and YouTube URLs. Powered by Python, HTTPX, and Playwright Chromium, with automated browser rendering, batch lookup, and evidence-based ID validation.**
 
 ![Version](https://img.shields.io/badge/version-v1.1.0-blue)
 ![Platform](https://img.shields.io/badge/platform-Windows%2064--bit-0078D6)
