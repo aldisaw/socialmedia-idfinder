@@ -75,7 +75,27 @@ Open **Settings** to configure and persist non-secret preferences:
 
 ---
 
-## 6. Backup & Restore
+## 6. Understanding Results, Confidence & Evidence
+
+### Result Statuses
+- **`FOUND`**: Valid identifier extracted and passed format & identity validation.
+- **`NOT_FOUND`**: HTTP 404 or no publicly verifiable identifier exposed (or rejected due to mismatch/conflict).
+- **`LOGIN_REQUIRED`**: Platform redirected to a login route or served a login wall (never bypassed).
+- **`CAPTCHA_REQUIRED`**: Platform served a CAPTCHA or human-verification challenge (never bypassed).
+- **`RATE_LIMITED`**: HTTP 429 rate limiting or active per-platform cooldown window.
+- **`BLOCKED`**: HTTP 403 restriction or SSRF policy blocked an unsafe redirect/non-HTTP(S) destination.
+- **`ERROR` / `TIMEOUT` / `CANCELLED`**: Network/HTTP/runtime failure, timeout exceeded, or cancelled by user.
+
+### Confidence & Evidence Metadata
+- **`HIGH`**: Structured page evidence (`EMBEDDED_JSON`, `HTML_JSON_EXTRACTED`, `BROWSER_EXTRACTED`, `STRUCTURED_METADATA`) with confirmed target identity (`VERIFIED`).
+- **`MEDIUM`**: Partial page confirmation, HTML attributes, or `URL_EXTRACTED` direct URL IDs (Facebook numeric URLs are strictly capped at `MEDIUM` / `PARTIALLY_VERIFIED` and never upgraded to `HIGH`).
+- **`LOW`**: Regex fallback or TikTok `SEC_UID` without numeric user ID.
+- **`NOT_VERIFIED`**: Any non-`FOUND` result.
+- Each result records `acquisition_method`, `extraction_method`, `extraction_source`, `response_status`, `final_url`, and `validation_status`.
+
+---
+
+## 7. Backup & Restore
 
 - Automated pre-migration backups use SQLite's WAL-consistent Online Backup API.
 - For manual backup, close Social ID Finder and copy `%APPDATA%\Social ID Finder\social_id_finder.db`.
@@ -83,7 +103,7 @@ Open **Settings** to configure and persist non-secret preferences:
 
 ---
 
-## 7. Troubleshooting
+## 8. Troubleshooting
 
 - **`LOGIN_REQUIRED`:** Platform requires login; authentication is never bypassed. For Facebook numeric profiles, use `facebook.com/profile.php?id=<NUMERIC_ID>`.
 - **`CAPTCHA_REQUIRED` / `RATE_LIMITED`:** Wait for cooldown and lower `Max concurrent requests` in **Settings**.
@@ -92,3 +112,24 @@ Open **Settings** to configure and persist non-secret preferences:
 - **Export Error:** Ensure target filename matches `.csv`/`.json`/`.txt` and is not a directory, symlink, database file, or Windows reserved name.
 - **Corrupted Database Dialog:** Original `.db` file is never overwritten. Close the app, move `%APPDATA%\Social ID Finder\social_id_finder.db`, and restart.
 - **Launch Error on Fresh Windows:** Ensure the full `ONEDIR` folder was extracted intact and install Microsoft Visual C++ Redistributable (x64) if `vcruntime140.dll` is missing.
+
+---
+
+## 9. Local Development (From Source)
+
+```powershell
+git clone https://github.com/aldisaw/socialmedia-idfinder.git
+cd socialmedia-idfinder
+python -m venv .venv
+.\.venv\Scripts\pip.exe install -r requirements.txt
+.\.venv\Scripts\pip.exe install -r requirements-browser.txt
+.\.venv\Scripts\playwright.exe install chromium
+.\.venv\Scripts\python.exe main.py
+.\.venv\Scripts\pytest.exe -q
+```
+
+Build Browser Edition packages locally:
+```powershell
+.\build_browser_onedir.bat
+.\build_browser_onefile.bat
+```
