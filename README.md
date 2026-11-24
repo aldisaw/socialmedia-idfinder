@@ -7,7 +7,7 @@
 ![Tests](https://img.shields.io/badge/tests-284%20passed-brightgreen)
 
 <!-- Application Preview: replace with docs/assets/social-id-finder-overview.gif when the animated overview GIF is supplied -->
-![Social ID Finder Overview](docs/assets/social-id-finder-overview.jpg)
+![Social ID Finder Overview](docs/assets/social-id-finder-overview.gif)
 
 ## About
 
