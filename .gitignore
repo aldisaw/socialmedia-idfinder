@@ -1,0 +1,22 @@
+# Python / virtualenv
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local logs & databases (runtime data lives in %APPDATA%\Social ID Finder)
+logs/*.log
+*.log
+*.db
+*.db-wal
+*.db-shm
+*.bak
+
+# PyInstaller build & release outputs (binaries belong in GitHub Releases, not Git)
+build/
+build_v1.1.0/
+dist/
+dist_v1.1.0/
+release/
+release_v1.1.0/
+github_release_v1.1.0/

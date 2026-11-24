@@ -1,0 +1,5 @@
+# Optional Method B browser acquisition dependencies (not required for core HTTP extraction)
+# Install inside .venv only:
+#   .\.venv\Scripts\pip.exe install -r requirements-browser.txt
+#   .\.venv\Scripts\playwright.exe install chromium
+playwright==1.65.2
